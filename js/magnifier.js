@@ -1,4 +1,5 @@
 let magnifierRender = (function () {
+    let computedMark;
     let smallBox = document.getElementById('smallBox'),
         bigBox = document.getElementById('bigBox'),
         mark = document.getElementById('mark'),
@@ -14,22 +15,22 @@ let magnifierRender = (function () {
         maxT = smallH - markH;
 
     //=> 计算mark位置
-    let computedMark = function (e) {
-      e = e || window.event;
-      let curL = e.clientX - smallBox.offsetLeft - markW / 2,
-          curT = e.clientY - smallBox.offsetTop - markH / 2;
+    computedMark = function (e) {
+        e = e || window.event;
+        let curL = e.clientX - smallBox.offsetLeft - markW / 2,
+            curT = e.clientY - smallBox.offsetTop - markH / 2;
 
-      //=> 边界判断
-      curL = curL < 0 ? 0 : (curL > maxL ? maxL : curL);
-      curT = curT < 0 ? 0 : (curT > maxT ? maxT : curT);
+        //=> 边界判断
+        curL = curL < 0 ? 0 : (curL > maxL ? maxL : curL);
+        curT = curT < 0 ? 0 : (curT > maxT ? maxT : curT);
 
-      //=> 设置mark样式
-      mark.style.left = curL + 'px';
-      mark.style.top = curT + 'px';
+        //=> 设置mark样式
+        mark.style.left = curL + 'px';
+        mark.style.top = curT + 'px';
 
-      //=> 计算大图位置，mark向右移动，bigimg向左移动（移动方向是相反的）
-      bigImg.style.left = -curL * 3 + 'px';
-      bigImg.style.top = -curT * 3 + 'px';
+        //=> 计算大图位置，mark向右移动，bigimg向左移动（移动方向是相反的）
+        bigImg.style.left = -curL * 3 + 'px';
+        bigImg.style.top = -curT * 3 + 'px';
     };
 
     //=> 给smallbox的相关事件绑定方法
@@ -44,7 +45,7 @@ let magnifierRender = (function () {
             computedMark(e);
         };
 
-        smallBox.oumouseleave = function (e) {
+        smallBox.onmouseleave = function (e) {
             mark.style.display = 'none';
             bigBox.style.display = 'none';
         }
